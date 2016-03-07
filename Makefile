@@ -1,13 +1,13 @@
-all: facebook
+all: botnet
 
-facebook: Graph.o Person.o main.cpp
-	g++ -std=c++11 -o facebook main.cpp Graph.o Person.o
+botnet: Graph.o Person.o main.cpp
+	g++ -O3 -ansi -Wall main.cpp Graph.o Person.o -lm
 
 Graph.o: Graph.cpp Graph.h Person.o
-	g++ -std=c++11 -g -c Graph.cpp
+	g++ -O3 -ansi -Wall -g -c Graph.cpp -lm
 
 Person.o: Person.cpp Person.h
-	g++ -std=c++11 -g -c Person.cpp
+	g++ -O3 -ansi -Wall -g -c Person.cpp -lm
 
 clean:
-	rm *.o facebook
+	rm *.o *.out

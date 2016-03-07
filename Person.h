@@ -4,7 +4,7 @@
 #include <list>
 
 class Person {
-    int id;
+    unsigned int id;
     std::list<Person *> links;
 
 public:

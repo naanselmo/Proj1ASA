@@ -3,7 +3,7 @@
 int main() {
     Graph *graph = new Graph();
     graph->populate();
-    graph->print();
+    graph->execute();
     delete graph;
     return 0;
 }
