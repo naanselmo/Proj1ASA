@@ -1,4 +1,4 @@
-#include "Person.h"
+#include "Person.hpp"
 
 Person::Person(unsigned int id) {
     this->id = id;

@@ -6,7 +6,7 @@
 #include <list>
 #include <vector>
 #include <limits>
-#include "Person.h"
+#include "Person.hpp"
 
 #define INFINITE std::numeric_limits<unsigned int>::max()
 

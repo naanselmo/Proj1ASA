@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Graph.h"
+#include "Graph.hpp"
 
 Graph::Graph() {
     this->vertexLength = 0;
@@ -25,6 +25,11 @@ void Graph::populate() {
 void Graph::execute() {
     std::vector<Vertex<Person *> *> fundamentals = tarjan();
 
+    if (fundamentals.empty()) {
+        std::cout << "0" << std::endl << "-1 -1" << std::endl;
+        return;
+    }
+
     unsigned int firstId = (*fundamentals.begin())->element->getId();
     unsigned int maxId = firstId, minId = firstId;
     for (std::vector<Vertex<Person *> *>::iterator it = fundamentals.begin() + 1; it != fundamentals.end(); it++) {
@@ -32,7 +37,6 @@ void Graph::execute() {
         maxId = std::max(maxId, fundamental->getId());
         minId = std::min(minId, fundamental->getId());
     }
-
     std::cout << fundamentals.size() << std::endl;
     std::cout << minId << " " << maxId << std::endl;
 }
