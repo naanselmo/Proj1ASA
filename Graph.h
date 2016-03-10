@@ -5,11 +5,37 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <limits>
 #include "Person.h"
 
+#define INFINITE std::numeric_limits<unsigned int>::max()
+
+template<class T>
+class Vertex {
+public:
+    T element;
+    Vertex *parent;
+    unsigned int visitedTime;
+    unsigned int lowTime;
+    unsigned int childrenCount;
+    bool fundamental;
+    std::list<Vertex *> neighbours;
+
+public:
+    Vertex(T element);
+
+    void reset();
+
+    void addLink(Vertex *vertex);
+
+    std::list<Vertex *> &getNeighbours();
+
+    virtual ~Vertex();
+};
+
 class Graph {
-    Person **persons;
-    unsigned int personsLength;
+    Vertex<Person *> **vertex;
+    unsigned int vertexLength;
 
 public:
     Graph();
@@ -23,12 +49,9 @@ public:
     virtual ~Graph();
 
 private:
-    std::vector<std::vector<Person *> > tarjan_execute();
+    std::vector<Vertex<Person *> *> tarjan();
 
-    void tarjan_visit(Person *person, int &visited, std::map<Person *, int> &d, std::map<Person *, int> &low,
-                      std::stack<Person *> &stack, std::map<Person *, bool> &stack_contains,
-                      std::vector<std::vector<Person *> > &sccs);
+    void visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vertex<Person *> *> &fundamentals);
 };
-
 
 #endif //GRAPH_H

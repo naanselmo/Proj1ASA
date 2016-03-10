@@ -1,20 +1,13 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include <list>
-
 class Person {
     unsigned int id;
-    std::list<Person *> links;
 
 public:
-    Person(int id);
+    Person(unsigned int id);
 
-    void addLink(Person *person);
-
-    std::list<Person *> &getLinks();
-
-    int getId();
+    unsigned int getId();
 
     virtual ~Person();
 };
