@@ -49,7 +49,7 @@ public:
     virtual ~Graph();
 
 private:
-    std::vector<Vertex<Person *> *> tarjan();
+    std::vector<Vertex<Person *> *> findFundamentals();
 
     void visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vertex<Person *> *> &fundamentals);
 };
