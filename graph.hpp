@@ -6,7 +6,7 @@
 #include <list>
 #include <vector>
 #include <limits>
-#include "Person.hpp"
+#include "person.hpp"
 
 #define INFINITE std::numeric_limits<unsigned int>::max()
 
@@ -22,15 +22,11 @@ public:
     std::list<Vertex *> neighbours;
 
 public:
-    Vertex(T element);
-
-    void reset();
-
-    void addLink(Vertex *vertex);
-
-    std::list<Vertex *> &getNeighbours();
-
-    virtual ~Vertex();
+    Vertex(T element);                          // Constructor, creates a new vertex
+    void reset();                               // Resets a vertex to its initial state
+    void addLink(Vertex* const vertex);         // Connects the vertex with another one
+    std::list<Vertex *> &getNeighbours();       // Returns a list of vertices to which this vertex is connected
+    virtual ~Vertex();                          // Deconstructor, cleans up a vertex
 };
 
 class Graph {
@@ -38,19 +34,14 @@ class Graph {
     unsigned int vertexLength;
 
 public:
-    Graph();
-
+    Graph();                                    // Constructor, creates a new graph
     void populate();
-
     void execute();
-
     void print();
-
-    virtual ~Graph();
+    virtual ~Graph();                           // Deconstructor, cleans up a graph
 
 private:
     std::vector<Vertex<Person *> *> findFundamentals();
-
     void visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vertex<Person *> *> &fundamentals);
 };
 

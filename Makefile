@@ -1,13 +1,13 @@
 all: botnet
 
-botnet: Graph.o Person.o main.cpp
-	g++ -O3 -ansi -Wall main.cpp Graph.o Person.o -lm
+botnet: graph.o person.o main.cpp
+	g++ -O3 -ansi -Wall main.cpp graph.o person.o -lm
 
-Graph.o: Graph.cpp Graph.hpp Person.o
-	g++ -O3 -ansi -Wall -g -c Graph.cpp -lm
+graph.o: graph.cpp graph.hpp person.o
+	g++ -O3 -ansi -Wall -g -c graph.cpp -lm
 
-Person.o: Person.cpp Person.hpp
-	g++ -O3 -ansi -Wall -g -c Person.cpp -lm
+person.o: person.cpp person.hpp
+	g++ -O3 -ansi -Wall -g -c person.cpp -lm
 
 clean:
 	rm *.o *.out

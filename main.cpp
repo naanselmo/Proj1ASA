@@ -1,6 +1,7 @@
-#include "Graph.hpp"
+#include "graph.hpp"
 
-int main() {
+int main()
+{
     Graph *graph = new Graph();
     graph->populate();
     graph->execute();
