@@ -13,7 +13,7 @@ Vertex<T>::Vertex(T element)
 }
 
 template<class T>
-inline void Vertex<T>::addLink(const Vertex* const vertex)
+inline void Vertex<T>::addLink(Vertex* const vertex)
 {
     this->neighbours.push_back(vertex);
 }
@@ -121,7 +121,7 @@ std::vector<Vertex<Person *> *> Graph::findFundamentals()
         this->vertex[i]->reset();
     }
 
-    // Visit all unvisited vertex and compute all visited and low times
+    // Visit every unvisited vertex and compute the times
     for (unsigned int i = 0; i < this->vertexLength; i++) {
         Vertex<Person *> *vertex = this->vertex[i];
         if (vertex->visitedTime == INFINITE) {
@@ -140,20 +140,23 @@ void Graph::visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vert
 
     // Pre-order traversal to compute visited time
     vertex->visitedTime = vertex->lowTime = time++;
+
     // Visit all unvisited children and compute low and visited times
     std::list<Vertex<Person *> *> neighbours = vertex->getNeighbours();
+
     for (std::list<Vertex<Person *> *>::iterator it = neighbours.begin(); it != neighbours.end(); it++) {
         Vertex<Person *> *neighbour = *it;
+
         // Tree edge so vertex.low = min(vertex.low, neighbour.low)
         if (neighbour->visitedTime == INFINITE) {
             vertex->childrenCount++;
             neighbour->parent = vertex;
             this->visit(neighbour, time, fundamentals);
 
-            // If its not yet in the fundamental list, check if its fundamental
+            // If it's not yet in the fundamental list, check if it's fundamental
             if (!vertex->fundamental) {
-                // If its a root and has more than one child, it is a fundamental person
-                // or if its not root and its visited time is lesser or equal than any of its childs, it is a fundamental person
+                // If it's a root and has more than one child, it's a fundamental vertex
+                // or if it's not root but its visited time is less or equal to any of its children's, it is a fundamental vertex
                 if ((vertex->parent == NULL && vertex->childrenCount > 1)
                 || (vertex->parent != NULL && vertex->visitedTime <= neighbour->lowTime)) {
                     fundamentals.push_back(vertex);
@@ -163,7 +166,8 @@ void Graph::visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vert
 
             // Post order traversal to compute low time
             vertex->lowTime = std::min(vertex->lowTime, neighbour->lowTime);
-            // Back edge so vertex.low = min(vertex.low, neighbour.visited)
+
+        // Back edge so vertex.low = min(vertex.low, neighbour.visited)
         } else if (vertex->parent != neighbour) {
             // Post order traversal to compute low time
             vertex->lowTime = std::min(vertex->lowTime, neighbour->visitedTime);

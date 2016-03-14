@@ -22,11 +22,11 @@ public:
     std::list<Vertex *> neighbours;
 
 public:
-    Vertex(T element);                                          // Constructor, creates a new vertex
-    inline void reset();                                        // Resets a vertex to its initial state
-    inline void addLink(const Vertex* const vertex);            // Connects the vertex with another one
-    inline const std::list<Vertex *> &getNeighbours() const;    // Returns a list of vertices to which this vertex is connected
-    virtual ~Vertex();                                          // Deconstructor, cleans up a vertex
+    Vertex(T element);                                   // Constructor, creates a new vertex
+    void reset();                                        // Resets a vertex to its initial state
+    void addLink(Vertex* const vertex);                  // Connects the vertex with another one
+    const std::list<Vertex *> &getNeighbours() const;    // Returns a list of vertices to which this vertex is connected
+    virtual ~Vertex();                                   // Deconstructor, cleans up a vertex
 };
 
 class Graph {
