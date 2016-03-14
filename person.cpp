@@ -1,16 +1,16 @@
 #include "person.hpp"
 
-Person::Person(unsigned int id)
+inline Person::Person(unsigned int id)
 {
     this->id = id;
 }
 
-unsigned int Person::getId()
+inline unsigned int Person::getId() const
 {
     return this->id;
 }
 
-Person::~Person()
+inline Person::~Person()
 {
 
 }

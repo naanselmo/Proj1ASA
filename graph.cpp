@@ -6,26 +6,26 @@
 //
 
 template<class T>
-Vertex<T>::Vertex(T element)
+inline Vertex<T>::Vertex(T element)
 {
     this->element = element;
     this->reset();
 }
 
 template<class T>
-void Vertex<T>::addLink(Vertex* const vertex)
+inline void Vertex<T>::addLink(const Vertex* const vertex)
 {
     this->neighbours.push_back(vertex);
 }
 
 template<class T>
-std::list<Vertex<T> *> &Vertex<T>::getNeighbours()
+inline const std::list<Vertex<T> *> &Vertex<T>::getNeighbours() const
 {
     return this->neighbours;
 }
 
 template<class T>
-void Vertex<T>::reset()
+inline void Vertex<T>::reset()
 {
     this->visitedTime = INFINITE;
     this->lowTime = 0;
@@ -35,7 +35,7 @@ void Vertex<T>::reset()
 }
 
 template<class T>
-Vertex<T>::~Vertex()
+inline Vertex<T>::~Vertex()
 {
     delete this->element;
 }
@@ -44,7 +44,7 @@ Vertex<T>::~Vertex()
 // Graph (Class)
 //
 
-Graph::Graph()
+inline Graph::Graph()
 {
     this->vertexLength = 0;
 }
@@ -61,7 +61,8 @@ void Graph::populate()
     for (unsigned int i = 0; i < linksLength; i++) {
         unsigned int from, to;
         std::cin >> from >> to;
-        //Ids start at 1
+
+        // IDs start at 1, but we store them from 0
         this->vertex[--from]->addLink(this->vertex[--to]);
         this->vertex[to]->addLink(this->vertex[from]);
     }
@@ -73,21 +74,22 @@ void Graph::execute()
 
     if (fundamentals.empty()) {
         std::cout << "0" << std::endl << "-1 -1" << std::endl;
-        return;
-    }
+    } else {
+        unsigned int firstId = (*fundamentals.begin())->element->getId();
+        unsigned int maxId = firstId, minId = firstId;
 
-    unsigned int firstId = (*fundamentals.begin())->element->getId();
-    unsigned int maxId = firstId, minId = firstId;
-    for (std::vector<Vertex<Person *> *>::iterator it = fundamentals.begin() + 1; it != fundamentals.end(); it++) {
-        Person *fundamental = (*it)->element;
-        maxId = std::max(maxId, fundamental->getId());
-        minId = std::min(minId, fundamental->getId());
+        for (std::vector<Vertex<Person *> *>::iterator it = fundamentals.begin() + 1; it != fundamentals.end(); it++) {
+            Person *fundamental = (*it)->element;
+            maxId = std::max(maxId, fundamental->getId());
+            minId = std::min(minId, fundamental->getId());
+        }
+
+        std::cout << fundamentals.size() << std::endl;
+        std::cout << minId << " " << maxId << std::endl;
     }
-    std::cout << fundamentals.size() << std::endl;
-    std::cout << minId << " " << maxId << std::endl;
 }
 
-void Graph::print()
+void Graph::print() const
 {
     std::cout << "Persons: " << this->vertexLength << std::endl;
     for (unsigned int i = 0; i < this->vertexLength; i++) {
@@ -113,10 +115,12 @@ std::vector<Vertex<Person *> *> Graph::findFundamentals()
 {
     unsigned int time = 0;
     std::vector<Vertex<Person *> *> fundamentals;
-    // Reset all information
+
+    // Reset all the information from previous calls
     for (unsigned int i = 0; i < this->vertexLength; i++) {
         this->vertex[i]->reset();
     }
+
     // Visit all unvisited vertex and compute all visited and low times
     for (unsigned int i = 0; i < this->vertexLength; i++) {
         Vertex<Person *> *vertex = this->vertex[i];

@@ -22,11 +22,11 @@ public:
     std::list<Vertex *> neighbours;
 
 public:
-    Vertex(T element);                          // Constructor, creates a new vertex
-    void reset();                               // Resets a vertex to its initial state
-    void addLink(Vertex* const vertex);         // Connects the vertex with another one
-    std::list<Vertex *> &getNeighbours();       // Returns a list of vertices to which this vertex is connected
-    virtual ~Vertex();                          // Deconstructor, cleans up a vertex
+    inline Vertex(T element);                                  // Constructor, creates a new vertex
+    inline void reset();                                       // Resets a vertex to its initial state
+    inline void addLink(const Vertex* const vertex);           // Connects the vertex with another one
+    inline const std::list<Vertex *> &getNeighbours() const;   // Returns a list of vertices to which this vertex is connected
+    inline virtual ~Vertex();                                  // Deconstructor, cleans up a vertex
 };
 
 class Graph {
@@ -34,11 +34,11 @@ class Graph {
     unsigned int vertexLength;
 
 public:
-    Graph();                                    // Constructor, creates a new graph
-    void populate();
-    void execute();
-    void print();
-    virtual ~Graph();                           // Deconstructor, cleans up a graph
+    inline Graph();       // Constructor, creates a new graph
+    void populate();      // Populates the graph with vertices
+    void execute();       // Finds fundamental vertices, and prints them
+    void print() const;   // Prints the graph
+    virtual ~Graph();     // Deconstructor, cleans up a graph
 
 private:
     std::vector<Vertex<Person *> *> findFundamentals();
