@@ -6,7 +6,7 @@
 //
 
 template<class T>
-inline Vertex<T>::Vertex(T element)
+Vertex<T>::Vertex(T element)
 {
     this->element = element;
     this->reset();
@@ -35,7 +35,7 @@ inline void Vertex<T>::reset()
 }
 
 template<class T>
-inline Vertex<T>::~Vertex()
+Vertex<T>::~Vertex()
 {
     delete this->element;
 }
@@ -44,7 +44,7 @@ inline Vertex<T>::~Vertex()
 // Graph (Class)
 //
 
-inline Graph::Graph()
+Graph::Graph()
 {
     this->vertexLength = 0;
 }
