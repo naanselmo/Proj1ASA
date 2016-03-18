@@ -48,8 +48,8 @@ public:
     virtual ~Graph();      // Deconstructor, cleans up a graph
 
 private:
-    std::vector<Vertex<Person *> *> findFundamentals();
-    void visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vertex<Person *> *> &fundamentals);
+    std::list<Vertex<Person *> *> findFundamentals();
+    void visit(Vertex<Person *> *vertex, unsigned int &time, std::list<Vertex<Person *> *> &fundamentals);
 };
 
 Person::Person(unsigned int id)
@@ -136,7 +136,7 @@ void Graph::populate()
 
 void Graph::execute()
 {
-    std::vector<Vertex<Person *> *> fundamentals = findFundamentals();
+    std::list<Vertex<Person *> *> fundamentals = findFundamentals();
 
     if (fundamentals.empty()) {
         std::cout << "0" << std::endl << "-1 -1" << std::endl;
@@ -144,7 +144,7 @@ void Graph::execute()
         unsigned int firstId = (*fundamentals.begin())->element->getId();
         unsigned int maxId = firstId, minId = firstId;
 
-        for (std::vector<Vertex<Person *> *>::iterator it = fundamentals.begin() + 1; it != fundamentals.end(); it++) {
+        for (std::list<Vertex<Person *> *>::iterator it = fundamentals.begin(); it != fundamentals.end(); it++) {
             Person *fundamental = (*it)->element;
             maxId = std::max(maxId, fundamental->getId());
             minId = std::min(minId, fundamental->getId());
@@ -177,10 +177,10 @@ Graph::~Graph()
     delete[] this->vertex;
 }
 
-std::vector<Vertex<Person *> *> Graph::findFundamentals()
+std::list<Vertex<Person *> *> Graph::findFundamentals()
 {
     unsigned int time = 0;
-    std::vector<Vertex<Person *> *> fundamentals;
+    std::list<Vertex<Person *> *> fundamentals;
 
     // Reset all the information from previous calls
     for (unsigned int i = 0; i < this->vertexLength; i++) {
@@ -197,7 +197,7 @@ std::vector<Vertex<Person *> *> Graph::findFundamentals()
     return fundamentals;
 }
 
-void Graph::visit(Vertex<Person *> *vertex, unsigned int &time, std::vector<Vertex<Person *> *> &fundamentals)
+void Graph::visit(Vertex<Person *> *vertex, unsigned int &time, std::list<Vertex<Person *> *> &fundamentals)
 {
     // Based on:
     // http://www.eecs.wsu.edu/~holder/courses/CptS223/spr08/slides/graphapps.pdf#7
