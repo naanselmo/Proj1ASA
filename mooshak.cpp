@@ -29,11 +29,11 @@ public:
     std::list<Vertex *> neighbours;
 
 public:
-    Vertex(T element);                                   // Constructor, creates a new vertex
-    void reset();                                        // Resets a vertex to its initial state
-    void addLink(Vertex* const vertex);                  // Connects the vertex with another one
-    std::list<Vertex *>* getNeighbours();                // Returns a list of vertices to which this vertex is connected
-    virtual ~Vertex();                                   // Deconstructor, cleans up a vertex
+    Vertex(T element);                       // Constructor, creates a new vertex
+    void reset();                            // Resets a vertex to its initial state
+    void addLink(Vertex* const vertex);      // Connects the vertex with another one
+    std::list<Vertex *> &getNeighbours();    // Returns a list of vertices to which this vertex is connected
+    virtual ~Vertex();                       // Deconstructor, cleans up a vertex
 };
 
 class Graph {
@@ -85,9 +85,9 @@ inline void Vertex<T>::addLink(Vertex* const vertex)
 }
 
 template<class T>
-inline std::list<Vertex<T> *>* Vertex<T>::getNeighbours()
+inline std::list<Vertex<T> *> &Vertex<T>::getNeighbours()
 {
-    return &(this->neighbours);
+    return this->neighbours;
 }
 
 template<class T>
@@ -161,8 +161,8 @@ void Graph::print() const
     for (unsigned int i = 0; i < this->vertexLength; i++) {
         Vertex<Person *> *vertex = this->vertex[i];
         std::cout << "Person " << vertex->element->getId() << "[" << vertex << "] is linked to: " << std::endl;
-        std::list<Vertex<Person *> *> *links = vertex->getNeighbours();
-        for (std::list<Vertex<Person *> *>::iterator it = links->begin(); it != links->end(); it++) {
+        std::list<Vertex<Person *> *> links = vertex->getNeighbours();
+        for (std::list<Vertex<Person *> *>::iterator it = links.begin(); it != links.end(); it++) {
             Vertex<Person *> *neighbour = *it;
             std::cout << "\t-> Person " << neighbour->element->getId() << "[" << neighbour << "]" << std::endl;
         }
@@ -208,9 +208,9 @@ void Graph::visit(Vertex<Person *> *vertex, unsigned int &time, std::list<Vertex
     vertex->visitedTime = vertex->lowTime = time++;
 
     // Visit all unvisited children and compute low and visited times
-    std::list<Vertex<Person *> *> *neighbours = vertex->getNeighbours();
+    std::list<Vertex<Person *> *> &neighbours = vertex->getNeighbours();
 
-    for (std::list<Vertex<Person *> *>::iterator it = neighbours->begin(); it != neighbours->end(); it++) {
+    for (std::list<Vertex<Person *> *>::iterator it = neighbours.begin(); it != neighbours.end(); it++) {
         Vertex<Person *> *neighbour = *it;
 
         // Tree edge so vertex.low = min(vertex.low, neighbour.low)
