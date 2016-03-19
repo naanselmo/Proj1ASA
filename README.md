@@ -5,6 +5,7 @@ O nosso algoritmo é baseado em DFS.
 Usamos DFS para visitar o grafo, e dar valores visited e low a cada vertice, onde estes teem o seguinte significado:
 * Visited de um vertice V, representa uma especie de indice, indica a ordem de visita de V, isto é o numero de vertices visitados ate chegar a V. (Não tem nada a ver com o identificador de V que nos é dado no problema).
 * Low de um vertice V, é o indice do vertice de menor indice que é possivel chegar a partir de V usando 0 ou mais arcos de arvore e depois no maximo um arco para tras. (verificar traducao)
+
 Depois computamos todos os vertices fundamentais a partir dos valores de visited e low.
 
 Descricao da solucao
